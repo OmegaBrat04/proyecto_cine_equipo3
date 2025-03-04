@@ -18,6 +18,8 @@ class _RegistroUState extends State<RegistroU> {
   final rfcController = TextEditingController();
   final usuarioController = TextEditingController();
   final contrasenaController = TextEditingController();
+  final confirmarContrasenaController = TextEditingController();
+  final cumpleanosController = TextEditingController();
   String departamento = 'Taquilla';
 
   Widget textFields(String label, TextEditingController controller,
@@ -71,7 +73,8 @@ class _RegistroUState extends State<RegistroU> {
           children: [
             Container(
               width: 180,
-              margin: const EdgeInsets.only(left: 30, right: 30, top: 60, bottom: 60),
+              margin: const EdgeInsets.only(
+                  left: 30, right: 30, top: 60, bottom: 60),
               decoration: BoxDecoration(
                 color: const Color(0xFF081C42),
                 borderRadius: BorderRadius.circular(25),
@@ -79,7 +82,7 @@ class _RegistroUState extends State<RegistroU> {
               child: Column(
                 children: [
                   Container(
-                    height: 150,
+                    height: 100,
                     margin: const EdgeInsets.only(top: 20),
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
@@ -131,7 +134,7 @@ class _RegistroUState extends State<RegistroU> {
                   ),
                   const Row(
                     children: [
-                       CircleAvatar(
+                      CircleAvatar(
                         radius: 15,
                         backgroundColor: Color(0xFF081C42),
                         child: Text(
@@ -142,20 +145,20 @@ class _RegistroUState extends State<RegistroU> {
                               color: Color.fromARGB(255, 255, 255, 255)),
                         ),
                       ),
-                       SizedBox(
+                      SizedBox(
                         width: 15,
                       ),
-                       Text(
+                      Text(
                         'Perfil',
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 255, 255, 255)),
                       ),
-                       SizedBox(
+                      SizedBox(
                         width: 600,
                       ),
-                       CircleAvatar(
+                      CircleAvatar(
                         radius: 15,
                         backgroundColor: Color(0xFF081C42),
                         child: Text(
@@ -166,10 +169,10 @@ class _RegistroUState extends State<RegistroU> {
                               color: Color.fromARGB(255, 255, 255, 255)),
                         ),
                       ),
-                       SizedBox(
+                      SizedBox(
                         width: 15,
                       ),
-                       Text(
+                      Text(
                         'Contraseña',
                         style: TextStyle(
                             fontSize: 20,
@@ -223,6 +226,13 @@ class _RegistroUState extends State<RegistroU> {
                                   height: 50,
                                   width: constraints.maxWidth / 3 - 20,
                                   child: textFields('RFC', rfcController)),
+                              const SizedBox(width: 30),
+                              SizedBox(
+                                      height: 50,
+                                      width: constraints.maxWidth / 3 - 20,
+                                      child: textFields(
+                                          'Confirmar Contraseña', confirmarContrasenaController,
+                                          obscureText: true)),
                             ],
                           ),
                           const SizedBox(height: 60),
@@ -261,8 +271,8 @@ class _RegistroUState extends State<RegistroU> {
                                       }
                                     },
                                     decoration: InputDecoration(
-                                      fillColor:
-                                          const Color.fromARGB(255, 255, 255, 255),
+                                      fillColor: const Color.fromARGB(
+                                          255, 255, 255, 255),
                                       filled: true,
                                       floatingLabelStyle: const TextStyle(
                                         color: Color.fromARGB(255, 75, 73, 73),
@@ -305,6 +315,17 @@ class _RegistroUState extends State<RegistroU> {
                                   ),
                                 ),
                               ),
+                            ],
+                          ),
+                          const SizedBox(height: 60),
+                          Row(
+                            children: [
+                              SizedBox(
+                                  height: 50,
+                                  width: constraints.maxWidth / 3 - 20,
+                                  child: textFields('Cumpleaños', cumpleanosController),
+                                ),
+                              
                             ],
                           ),
                         ],
