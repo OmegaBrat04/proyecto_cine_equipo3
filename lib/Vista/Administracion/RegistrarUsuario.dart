@@ -104,7 +104,9 @@ class _RegistroUState extends State<RegistroU> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           icon: const Icon(Icons.arrow_back,
                               color: Color.fromARGB(255, 255, 255, 255),
                               size: 30)),
