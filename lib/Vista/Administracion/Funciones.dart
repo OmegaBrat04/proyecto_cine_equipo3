@@ -56,10 +56,10 @@ class _ListaFuncionesState extends State<ListaFunciones> {
                       ),
                       const SizedBox(width: 10),
                       const Text(
-                        'Funciones',
+                        'Regresar',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 24,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -145,45 +145,58 @@ class _ListaFuncionesState extends State<ListaFunciones> {
             Expanded(
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: DataTable(
-                  border: TableBorder.all(color: Colors.grey),
-                  headingTextStyle: const TextStyle(color: Colors.white),
-                  dataTextStyle: const TextStyle(color: Colors.white),
-                  columns: const <DataColumn>[
-                    DataColumn(label: Text('Titulo')),
-                    DataColumn(label: Text('Horario')),
-                    DataColumn(label: Text('Fecha')),
-                    DataColumn(label: Text('Sala')),
-                    DataColumn(label: Text('Tipo')),
-                    DataColumn(label: Text('Idioma')),
-                    DataColumn(label: Text('Estado')),
-                    DataColumn(label: Text('Opciones')),
-                  ],
-                  rows: <DataRow>[
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(Text('Jurassic World: Rebirth')),
-                        DataCell(Text('13:20')),
-                        DataCell(Text('06-03-2025')),
-                        DataCell(Text('8')),
-                        DataCell(Text('Tradicional')),
-                        DataCell(Text('Español')),
-                        DataCell(Text('Finalizado')),
-                        DataCell(
-                          Row(
-                            children: [
-                              IconButton(
-                                icon:
-                                    const Icon(Icons.edit, color: Colors.white),
-                                onPressed: () {},
+                child: Column(
+                  children: [
+                    const Text(
+                      'Funciones',
+                      style:  TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    DataTable(
+                      border: TableBorder.all(color: Colors.grey),
+                      headingTextStyle: const TextStyle(color: Colors.white),
+                      dataTextStyle: const TextStyle(color: Colors.white),
+                      columns: const <DataColumn>[
+                        DataColumn(label: Text('Titulo')),
+                        DataColumn(label: Text('Horario')),
+                        DataColumn(label: Text('Fecha')),
+                        DataColumn(label: Text('Sala')),
+                        DataColumn(label: Text('Tipo')),
+                        DataColumn(label: Text('Idioma')),
+                        DataColumn(label: Text('Estado')),
+                        DataColumn(label: Text('Opciones')),
+                      ],
+                      rows: <DataRow>[
+                        DataRow(
+                          cells: <DataCell>[
+                            DataCell(Text('Jurassic World: Rebirth')),
+                            DataCell(Text('13:20')),
+                            DataCell(Text('06-03-2025')),
+                            DataCell(Text('8')),
+                            DataCell(Text('Tradicional')),
+                            DataCell(Text('Español')),
+                            DataCell(Text('Finalizado')),
+                            DataCell(
+                              Row(
+                                children: [
+                                  IconButton(
+                                    icon:
+                                        const Icon(Icons.edit, color: Colors.white),
+                                    onPressed: () {},
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.delete,
+                                        color: Colors.white),
+                                    onPressed: () {},
+                                  ),
+                                ],
                               ),
-                              IconButton(
-                                icon: const Icon(Icons.delete,
-                                    color: Colors.white),
-                                onPressed: () {},
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

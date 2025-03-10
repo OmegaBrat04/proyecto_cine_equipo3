@@ -136,7 +136,7 @@ class _FuncionesState extends State<Funciones> {
                                 size: 30),
                           ),
                           const Text(
-                            'Añadir Funcion',
+                            'Atras',
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,

@@ -165,7 +165,7 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
                             size: 30),
                       ),
                       const Text(
-                        'Agregar Pelicula',
+                        'Atras',
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
