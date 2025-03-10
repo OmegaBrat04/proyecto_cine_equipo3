@@ -6,51 +6,46 @@ import 'package:proyecto_cine_equipo3/Vista/Services/Multiseleccion.dart';
 import 'Funciones.dart';
 
 void main() {
-  runApp(const RPeliculas());
+  runApp(const AFunciones());
 }
 
-class RPeliculas extends StatelessWidget {
-  const RPeliculas({super.key});
+class AFunciones extends StatelessWidget {
+  const AFunciones({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: ListaPeliculas(),
+        body: Funciones(),
       ),
     );
   }
 }
 
-class ListaPeliculas extends StatefulWidget {
-  const ListaPeliculas({super.key});
+class Funciones extends StatefulWidget {
+  const Funciones({super.key});
 
   @override
-  _ListaPeliculasState createState() => _ListaPeliculasState();
+  _FuncionesState createState() => _FuncionesState();
 }
 
-class _ListaPeliculasState extends State<ListaPeliculas> {
+class _FuncionesState extends State<Funciones> {
   final tituloController = TextEditingController();
-  final directorController = TextEditingController();
-  final duracionController = TextEditingController();
+  final horarioController = TextEditingController();
+  final salaController = TextEditingController();
+  final fechaController = TextEditingController();
+  final tipoController = TextEditingController();
   final idiomaController = TextEditingController();
-  final subtitulosController = TextEditingController();
-  final generoController = TextEditingController();
-  final clasificacionController = TextEditingController();
-  final sinopsisController = TextEditingController();
+  final buscadorController = TextEditingController();
   File? _imagen;
+  String dropdownValue = 'Tradicional';
+  String dropdownValue2 = '1';
+  String dropdownValue3 = 'Español';
 
-  List<String> idiomas = ['Español', 'Inglés', 'Francés', 'Japones'];
-  List<String> idiomasSeleccionados = [];
-  List<String> generos = ['Acción', 'Comedia', 'Drama', 'Terror'];
-  List<String> generosSeleccionados = [];
-  List<String> clasificaciones = ['A', 'B', 'B15', 'C', 'D'];
-  List<String> clasificacionesSeleccionadas = [];
-  String? subtitulos = 'Si';
-  String dropdownValue = 'B';
-
-  Future<void> _seleccionarImagen() async {
+  /*Future<void> _seleccionarImagen() async {
     final imgSeleccionada =
         await ImagePicker().pickImage(source: ImageSource.gallery);
 
@@ -61,9 +56,9 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
         Exception('No image selected.');
       }
     });
-  }
+  }*/
 
-  Future<void> _seleccionarDuracion() async {
+  Future<void> _seleccionarHorario() async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay(hour: 0, minute: 0),
@@ -76,47 +71,21 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
     );
     if (picked != null) {
       setState(() {
-        duracionController.text = '${picked.hour}h ${picked.minute}m';
+        horarioController.text = '${picked.hour}h ${picked.minute}m';
       });
     }
   }
 
-  Future<void> _seleccionarIdiomas() async {
-    final List<String> seleccionados = await showDialog(
+  Future<void> _seleccionarFecha() async {
+    final DateTime? picked = await showDatePicker(
       context: context,
-      builder: (BuildContext context) {
-        return MultiSelectDialog(
-          items: idiomas,
-          initialSelectedItems: idiomasSeleccionados,
-          titulo: 'Selecciona los idiomas',
-        );
-      },
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
     );
-
-    if (seleccionados != null) {
+    if (picked != null) {
       setState(() {
-        idiomasSeleccionados = seleccionados;
-        idiomaController.text = idiomasSeleccionados.join(', ');
-      });
-    }
-  }
-
-  Future<void> _seleccionarGenero() async {
-    final List<String> seleccionados = await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return MultiSelectDialog(
-          items: generos,
-          initialSelectedItems: generosSeleccionados,
-          titulo: 'Selecciona los generos',
-        );
-      },
-    );
-
-    if (seleccionados != null) {
-      setState(() {
-        generosSeleccionados = seleccionados;
-        generoController.text = generosSeleccionados.join(', ');
+        fechaController.text = DateFormat('yyyy-MM-dd').format(picked);
       });
     }
   }
@@ -156,20 +125,47 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.arrow_back,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            size: 30),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(Icons.arrow_back,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                size: 30),
+                          ),
+                          const Text(
+                            'Añadir Funcion',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                          ),
+                        ],
                       ),
-                      const Text(
-                        'Agregar Pelicula',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 255, 255, 255)),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: TextField(
+                            controller: buscadorController,
+                            style: const TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                              hintText: 'Buscar Pelicula',
+                              hintStyle: const TextStyle(color: Colors.white70),
+                              prefixIcon:
+                                  const Icon(Icons.search, color: Colors.white),
+                              filled: true,
+                              fillColor: Colors.white.withValues(alpha: 0.2),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                            onChanged: (String value) {},
+                          ),
+                        ),
                       ),
                       CircleAvatar(
                         radius: 30,
@@ -184,7 +180,7 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 75),
                   Padding(
                     padding: const EdgeInsets.only(left: 30.0),
                     child: Row(
@@ -215,24 +211,6 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
                                     height: 200,
                                     fit: BoxFit.contain,
                                   ),
-                            const SizedBox(height: 20),
-                            SizedBox(
-                              height: 40,
-                              width: 150,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  _seleccionarImagen();
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5)),
-                                    backgroundColor: const Color(0xff434343)),
-                                child: const Text(
-                                  'Cargar Imagen',
-                                  style: TextStyle(color: Color(0xffF5F5F5)),
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                         const SizedBox(width: 30),
@@ -265,7 +243,7 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
                             ),
                             const SizedBox(height: 20),
                             const Text(
-                              'Director',
+                              'Asigne un horario',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,
@@ -280,36 +258,11 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: TextField(
-                                controller: directorController,
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding:
-                                      EdgeInsets.only(left: 10, bottom: 10),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            const Text(
-                              'Duración',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 5),
-                            Container(
-                              width: 200,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextField(
-                                controller: duracionController,
+                                controller: horarioController,
                                 readOnly: true,
-                                onTap: _seleccionarDuracion,
+                                onTap: _seleccionarHorario,
                                 decoration: const InputDecoration(
-                                  hintText: 'Seleccione la duracion',
+                                  hintText: 'Seleccione un horario',
                                   hintStyle: TextStyle(
                                       color: Colors.grey, fontSize: 12),
                                   prefixIcon: Icon(Icons.access_time),
@@ -321,119 +274,7 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
                             ),
                             const SizedBox(height: 20),
                             const Text(
-                              'Idioma',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 5),
-                            Container(
-                              width: 200,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextField(
-                                controller: idiomaController,
-                                readOnly: true,
-                                onTap: _seleccionarIdiomas,
-                                decoration: const InputDecoration(
-                                  hintText: 'Seleccione los idiomas',
-                                  hintStyle: TextStyle(
-                                      color: Colors.grey, fontSize: 12),
-                                  prefixIcon: Icon(Icons.language),
-                                  border: InputBorder.none,
-                                  contentPadding:
-                                      EdgeInsets.only(left: 10, bottom: 10),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            const Text(
-                              'Subtitulos',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 5),
-                            Row(
-                              children: [
-                                Radio<String>(
-                                  activeColor: Colors.white,
-                                  fillColor: WidgetStateColor.resolveWith(
-                                      (states) => Colors.white),
-                                  value: 'Si',
-                                  groupValue: subtitulos,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      subtitulos = value;
-                                    });
-                                  },
-                                ),
-                                const Text(
-                                  'Sí',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                Radio<String>(
-                                  activeColor: Colors.white,
-                                  fillColor: WidgetStateColor.resolveWith(
-                                      (states) => Colors.white),
-                                  value: 'No',
-                                  groupValue: subtitulos,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      subtitulos = value;
-                                    });
-                                  },
-                                ),
-                                const Text(
-                                  'No',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(width: 30),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Genero',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 5),
-                            Container(
-                              width: 200,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextField(
-                                controller: generoController,
-                                readOnly: true,
-                                onTap: _seleccionarGenero,
-                                decoration: const InputDecoration(
-                                  hintText: 'Seleccione los generos',
-                                  hintStyle: TextStyle(
-                                      color: Colors.grey, fontSize: 12),
-                                  prefixIcon: Icon(Icons.movie_outlined),
-                                  border: InputBorder.none,
-                                  contentPadding:
-                                      EdgeInsets.only(left: 10, bottom: 10),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            const Text(
-                              'Clasificacion',
+                              'Tipo de Sala',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,
@@ -466,11 +307,64 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
                                   });
                                 },
                                 items: <String>[
-                                  'A',
-                                  'B',
-                                  'B15',
-                                  'C',
-                                  'D'
+                                  'Tradicional',
+                                  '3D',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 30),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Seleccione una Sala',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 5),
+                            Container(
+                              padding: EdgeInsets.only(left: 10),
+                              width: 200,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: DropdownButton<String>(
+                                underline: Container(
+                                  color: Colors.transparent,
+                                ),
+                                dropdownColor:
+                                    const Color.fromARGB(255, 255, 255, 255),
+                                value: dropdownValue2,
+                                icon: const Icon(Icons.arrow_drop_down,
+                                    color: Colors.black),
+                                iconSize: 24,
+                                //elevation: 16,
+                                style: const TextStyle(color: Colors.black),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownValue2 = newValue!;
+                                  });
+                                },
+                                items: <String>[
+                                  '1',
+                                  '2',
+                                  '3',
+                                  '4',
+                                  '5',
+                                  '6',
+                                  '7',
+                                  '8',
                                 ].map<DropdownMenuItem<String>>((String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
@@ -481,7 +375,7 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
                             ),
                             const SizedBox(height: 20),
                             const Text(
-                              'Sinopsis',
+                              'Asigne una Fecha',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,
@@ -490,20 +384,71 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
                             const SizedBox(height: 5),
                             Container(
                               width: 200,
-                              height: 100,
+                              height: 30,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: TextField(
-                                style: const TextStyle(fontSize: 14),
-                                controller: sinopsisController,
-                                maxLines: 5,
+                                controller: fechaController,
+                                readOnly: true,
+                                onTap: _seleccionarFecha,
                                 decoration: const InputDecoration(
+                                  hintText: 'Seleccione una fecha',
+                                  hintStyle: TextStyle(
+                                      color: Colors.grey, fontSize: 12),
+                                  prefixIcon: Icon(Icons.date_range),
                                   border: InputBorder.none,
                                   contentPadding:
                                       EdgeInsets.only(left: 10, bottom: 10),
                                 ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            const Text(
+                              'Seleccione Idioma',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 5),
+                            Container(
+                              padding: EdgeInsets.only(left: 10),
+                              width: 200,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: DropdownButton<String>(
+                                underline: Container(
+                                  color: Colors.transparent,
+                                ),
+                                dropdownColor:
+                                    const Color.fromARGB(255, 255, 255, 255),
+                                value: dropdownValue3,
+                                icon: const Icon(Icons.arrow_drop_down,
+                                    color: Colors.black),
+                                iconSize: 24,
+                                //elevation: 16,
+                                style: const TextStyle(color: Colors.black),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownValue3 = newValue!;
+                                  });
+                                },
+                                items: <String>[
+                                  'Español',
+                                  'Ingles',
+                                  'Frances',
+                                  'Japon',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
                               ),
                             ),
                             const SizedBox(height: 20),
@@ -517,13 +462,13 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
                                         borderRadius: BorderRadius.circular(5)),
                                     backgroundColor: const Color(0xff14AE5C)),
                                 child: const Text(
-                                  'Guardar Usuario',
+                                  'Guardar Funcion',
                                   style: TextStyle(color: Color(0xffF5F5F5)),
                                 ),
                               ),
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
