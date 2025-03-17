@@ -156,21 +156,26 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.arrow_back,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            size: 30),
-                      ),
-                      const Text(
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(Icons.arrow_back,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                size: 30),
+                          ),
+                          const Text(
                         'Atras',
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 255, 255, 255)),
                       ),
+                        ],
+                      ),
+                      
                       CircleAvatar(
                         radius: 30,
                         backgroundColor: const Color(0xFF0665A4),
