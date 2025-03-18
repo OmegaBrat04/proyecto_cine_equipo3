@@ -28,17 +28,21 @@ class _MultiSelectCardDialogState extends State<MultiSelectCardDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(widget.titulo!),
-      content: Container(
+      backgroundColor: const Color(0xFF022044),
+      title: Text(
+        widget.titulo!,
+        style: const TextStyle(color: Colors.white),
+      ),
+      content: SizedBox(
         width: 800,
-        height: 350, 
+        height: 350,
         child: GridView.builder(
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4, 
-            crossAxisSpacing: 5, 
-            mainAxisSpacing: 5, 
-            childAspectRatio: 0.5, 
+            crossAxisCount: 4,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5,
+            childAspectRatio: 0.5,
           ),
           itemCount: widget.items.length,
           itemBuilder: (context, index) {
@@ -55,39 +59,49 @@ class _MultiSelectCardDialogState extends State<MultiSelectCardDialog> {
                 });
               },
               child: Card(
-                color: isSelected ? Colors.blue.withOpacity(0.5) : Colors.white,
+                color: isSelected
+                    ? const Color(0xFF4CAF50).withOpacity(0.5)
+                    : const Color(0xFF0D1B3D),
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.grey[400]!),
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
                       item["imagen"]!,
                       fit: BoxFit.contain,
-                      height: 100, 
+                      height: 100,
                       width: double.infinity,
                     ),
-                    const SizedBox(height: 5), 
+                    const SizedBox(height: 5),
                     Text(
                       item["nombre"]!,
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
-                      textAlign: TextAlign.center, 
+                      textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 5), 
+                    const SizedBox(height: 5),
                     Text(
                       'Precio: \$${item["precio"]!}',
                       style: const TextStyle(
-                        fontSize: 12, 
+                        fontSize: 12,
+                        color: Colors.white70,
                       ),
-                      textAlign: TextAlign.center, 
+                      textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 5), 
+                    const SizedBox(height: 5),
                     Text(
                       'Stock: ${item["stock"]!}',
                       style: const TextStyle(
                         fontSize: 12,
+                        color: Colors.white70,
                       ),
-                      textAlign: TextAlign.center, 
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
@@ -101,13 +115,25 @@ class _MultiSelectCardDialogState extends State<MultiSelectCardDialog> {
           onPressed: () {
             Navigator.of(context).pop(widget.initialSelectedItems);
           },
-          child: const Text('Cancelar'),
+          child: const Text('Cancelar',
+              style: TextStyle(color: Color(0xffBC0D06))),
+          style: ButtonStyle(
+            side: WidgetStateProperty.all(
+              const BorderSide(color: Color(0xffBC0D06)),
+            ),
+          ),
         ),
         TextButton(
           onPressed: () {
             Navigator.of(context).pop(_selectedItems);
           },
-          child: const Text('Aceptar'),
+          child:
+              const Text('Aceptar', style: TextStyle(color: Color(0xff14AE5C))),
+          style: ButtonStyle(
+            side: WidgetStateProperty.all(
+              const BorderSide(color: Color(0xff14AE5C)),
+            ),
+          ),
         ),
       ],
     );
